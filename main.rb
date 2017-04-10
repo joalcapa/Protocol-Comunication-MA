@@ -1,6 +1,8 @@
 require 'socket'
 
 load 'app/controllers/HomeController.rb'
+load 'app/models/ClientModel.rb'
+load 'app/models/ServerModel.rb'
 load 'app/daos/HomeDao.rb'
 load 'app/views/HomeView.rb'
 load 'app/Config.rb'
@@ -17,3 +19,8 @@ homeController = HomeController.new(homeDao, homeView, config)
 # Commissioning of concurrent threads
 homeView.threadPresent().join
 homeController.threadPresent().join
+
+homeController = nil
+homeView = nil
+homeDao = nil
+config = nil
