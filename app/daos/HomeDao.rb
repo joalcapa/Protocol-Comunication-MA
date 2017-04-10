@@ -12,7 +12,6 @@ class HomeDao
             messageBroadcast()
         else
             @statusServer = true
-            messageBroadcast()
         end
     end
         
