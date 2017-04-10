@@ -10,10 +10,13 @@ class HomeDao
         
     def run
         while(@running)
-            if (@config.getTypeService == Config::TYPE_SERVICE_CLIENT  &&
-                @config.getTypeOperationClient == Config::TYPE_OPERATION_CLIENT_BROADCAST)
-            then
-                @clientModel.messageBroadcast()
+            case @config.getTypeService
+                when Config::TYPE_SERVICE_CLIENT
+                    case @config.getTypeOperationClient
+                         when Config::TYPE_OPERATION_CLIENT_BROADCAST
+                             @clientModel.messageBroadcast()
+                    end
+                when Config::TYPE_SERVICE_SERVER
             end
             sleep(1);
         end
