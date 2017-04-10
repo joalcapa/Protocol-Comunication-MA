@@ -7,7 +7,7 @@ class HomeController
     
     def run()
         while(@running)
-            puts "hola"
+            puts "NEXT"
             sleep(1);
         end
     end

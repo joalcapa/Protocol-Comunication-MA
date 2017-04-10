@@ -3,10 +3,18 @@ require 'tk'
 class HomeView
     
     def initialize()
-        @statusServer = false
+        config() 
         @thread = Thread.new{ run() }
     end
     
+    def config() 
+        if (ENV['TYPE_SERVICE'] == 'client') then
+            @statusServer = false
+        else
+            @statusServer = true
+        end
+    end
+        
     def run()
         root = TkRoot.new { title "ProtocolRuby" }
         TkLabel.new(root) do
