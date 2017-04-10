@@ -1,7 +1,7 @@
 class HomeController
     
-    def initialize(homeModel, homeView)
-        @homeModel, @homeView, @running = homeModel, homeView, true
+    def initialize(homeDao, homeView)
+        @homeDao, @homeView, @running = homeDao, homeView, true
         @thread = Thread.new{ run() }
     end
     

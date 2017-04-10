@@ -3,6 +3,7 @@ require 'tk'
 class HomeView
     
     def initialize()
+        @statusServer = false
         @thread = Thread.new{ run() }
     end
     
@@ -17,6 +18,10 @@ class HomeView
     
     def threadPresent()
         return @thread
+    end
+    
+    def statusServer()
+        return @statusServer
     end
     
 end
