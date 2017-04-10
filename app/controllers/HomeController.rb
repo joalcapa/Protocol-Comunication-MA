@@ -1,13 +1,12 @@
 class HomeController
     
-    def initialize(homeDao, homeView)
-        @homeDao, @homeView, @running = homeDao, homeView, true
+    def initialize(homeDao, homeView, config)
+        @homeDao, @homeView, @running, @config = homeDao, homeView, true, config
         @thread = Thread.new{ run() }
     end
     
     def run
         while(@running)
-            puts "NEXT"
             sleep(1);
         end
     end

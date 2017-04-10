@@ -6,11 +6,12 @@ class HomeView
     STR_MODE_CLIENT = 'MODE CLIENT'
     STR_MODE_SERVER = 'MODE SERVER' 
     STR_LOOKING_SERVER = 'Looking server ...'
+    STR_WAITING_CLIENTS = 'Waiting for clients ...'
     
     LOOKING_SERVER = 1
     
-    def initialize
-        @statusServer = false
+    def initialize(config)
+        @config = config
         @statusOperationClient = LOOKING_SERVER
         initContext()
         changeMode()
@@ -54,14 +55,14 @@ class HomeView
     end
         
     def changeMode
-        if (@statusServer) then
+        if (@config.getTypeService) then
             @modeBtn.text = STR_MODE_CLIENT
             @modeTxt.text = STR_MODE_SERVER
-            @statusServer = false
+            @config.setTypeService(Config::TYPE_SERVICE_CLIENT)
         else
             @modeBtn.text = STR_MODE_SERVER
             @modeTxt.text = STR_MODE_CLIENT
-            @statusServer = true
+            @config.setTypeService(Config::TYPE_SERVICE_SERVER)
         end
         changeMessage()
     end
@@ -82,9 +83,8 @@ class HomeView
     def threadPresent
         return @thread
     end
-    
-    def statusServer
-        return @statusServer
+        
+    def connected(quantity)
+        @messageTxt.text = 'Connected: #{quantity}, #{STR_LOOKING_SERVER}'
     end
-    
 end
