@@ -1,4 +1,4 @@
-class HomeModel
+class ClientModel
     
     def initialize()
         

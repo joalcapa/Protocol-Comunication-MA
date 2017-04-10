@@ -1,8 +1,15 @@
+require 'socket'
+
 load 'app/controllers/HomeController.rb'
-load 'app/models/HomeModel.rb'
+load 'app/daos/HomeDao.rb'
 load 'app/views/HomeView.rb'
+load '.env'
 
 # Initialization of the application based on MVC (Model - View - Controller)
-homeModel = HomeModel.new()
-homeView = HomeView.new()
-homeController = HomeController.new(homeModel, homeView)
+homeDao = HomeDao.new
+homeView = HomeView.new
+homeController = HomeController.new(homeDao, homeView)
+
+# Commissioning of concurrent threads
+homeView.threadPresent().join
+homeController.threadPresent().join
