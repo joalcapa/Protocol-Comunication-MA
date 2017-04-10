@@ -1,10 +1,10 @@
 class HomeDao
     
-    def initialize()
+    def initialize
         config()
     end
         
-    def config() 
+    def config
         if (ENV['TYPE_SERVICE'] == 'client') then
             @statusServer = false
             @socketUDP = UDPSocket.new
@@ -15,7 +15,7 @@ class HomeDao
         end
     end
         
-    def messageBroadcast()
+    def messageBroadcast
         
     end
     

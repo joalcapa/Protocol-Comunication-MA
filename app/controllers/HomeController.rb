@@ -5,14 +5,14 @@ class HomeController
         @thread = Thread.new{ run() }
     end
     
-    def run()
+    def run
         while(@running)
             puts "NEXT"
             sleep(1);
         end
     end
     
-    def threadPresent()
+    def threadPresent
         return @thread
     end
     

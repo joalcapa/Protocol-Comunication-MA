@@ -1,6 +1,6 @@
 class ClientModel
     
-    def initialize()
+    def initialize
         
     end
     

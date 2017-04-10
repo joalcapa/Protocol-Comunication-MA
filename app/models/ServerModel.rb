@@ -1,6 +1,6 @@
 class ServerModel
     
-    def initialize()
+    def initialize
         
     end
     
