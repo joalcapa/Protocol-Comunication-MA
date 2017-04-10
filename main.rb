@@ -1,6 +1,7 @@
 load 'app/controllers/HomeController.rb'
 load 'app/models/HomeModel.rb'
 load 'app/views/HomeView.rb'
+load '.env'
 
 # Initialization of the application based on MVC (Model - View - Controller)
 homeModel = HomeModel.new()
