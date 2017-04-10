@@ -1,3 +1,5 @@
+require 'socket'
+
 load 'app/controllers/HomeController.rb'
 load 'app/daos/HomeDao.rb'
 load 'app/views/HomeView.rb'
