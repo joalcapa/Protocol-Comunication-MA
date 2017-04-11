@@ -7,6 +7,10 @@ class HomeController
     
     def run
         while(@running)
+            if(@homeView.getEvent) then
+                @homeDao.killServer
+                @homeView.setEvent(false)
+            end
             sleep(1);
         end
     end
