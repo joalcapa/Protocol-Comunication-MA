@@ -1,8 +1,9 @@
 require 'socket'
 
 load 'app/controllers/HomeController.rb'
-load 'app/models/ClientModel.rb'
-load 'app/models/ServerModel.rb'
+load 'app/serversModel/ServerModel.rb'
+load 'app/serversModel/ClientServerModel.rb'
+load 'app/serversModel/ServerServerModel.rb'
 load 'app/daos/HomeDao.rb'
 load 'app/views/HomeView.rb'
 load 'app/Config.rb'

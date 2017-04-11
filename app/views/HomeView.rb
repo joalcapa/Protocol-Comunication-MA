@@ -12,7 +12,8 @@ class HomeView
     
     def initialize(config)
         @config = config
-        @statusOperationClient = LOOKING_SERVER
+        @statusOperationClient, @event = LOOKING_SERVER, false
+        @mutex=Mutex.new
         initContext()
         changeMode()
         @thread = Thread.new{ run() }
@@ -55,16 +56,17 @@ class HomeView
     end
         
     def changeMode
-        if (@config.getTypeService) then
-            @modeBtn.text = STR_MODE_CLIENT
-            @modeTxt.text = STR_MODE_SERVER
-            @config.setTypeService(Config::TYPE_SERVICE_CLIENT)
-        else
+        if (@config.getTypeService == Config::TYPE_SERVICE_SERVER) then
             @modeBtn.text = STR_MODE_SERVER
             @modeTxt.text = STR_MODE_CLIENT
+            @config.setTypeService(Config::TYPE_SERVICE_CLIENT)
+        else
+            @modeBtn.text = STR_MODE_CLIENT
+            @modeTxt.text = STR_MODE_SERVER
             @config.setTypeService(Config::TYPE_SERVICE_SERVER)
         end
         changeMessage()
+        setEvent(true)
     end
         
     def changeMessage
@@ -86,5 +88,18 @@ class HomeView
         
     def connected(quantity)
         @messageTxt.text = 'Connected: #{quantity}, #{STR_LOOKING_SERVER}'
+    end
+        
+    def getEvent
+        @mutex.synchronize do
+            $event = @event
+        end
+        return $event
+    end
+        
+    def setEvent(event)
+        @mutex.synchronize do
+            @event = event
+        end
     end
 end

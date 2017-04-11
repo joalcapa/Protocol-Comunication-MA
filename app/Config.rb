@@ -20,7 +20,7 @@ class Config
         @mutex.synchronize do
             $typeService = @typeService
         end
-        return @typeService
+        return $typeService
     end
     
     def setTypeService(typeService)
