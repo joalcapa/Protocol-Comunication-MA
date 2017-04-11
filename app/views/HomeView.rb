@@ -12,7 +12,7 @@ class HomeView
     
     def initialize(config)
         @config = config
-        @statusOperationClient, @event = LOOKING_SERVER, false
+        @statusOperationClient, @event, @running = LOOKING_SERVER, false, true
         @mutex=Mutex.new
         initContext()
         changeMode()
@@ -80,6 +80,7 @@ class HomeView
         
     def run
         Tk.mainloop
+        @running = false
     end
     
     def threadPresent
@@ -101,5 +102,12 @@ class HomeView
         @mutex.synchronize do
             @event = event
         end
+    end
+        
+    def getRunning
+        @mutex.synchronize do
+            $running = @running
+        end
+        return $running
     end
 end

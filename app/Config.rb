@@ -10,6 +10,8 @@ class Config
     BROADCAST_PORT = 3000
     DATA_BROADCAST = 'EE-34'
     
+    CONFIG_NULL = 'NULL'
+    
     def initialize
         @typeService = ENV['TYPE_SERVICE'] || TYPE_SERVICE_CLIENT
         @typeOperationClient = ENV['TYPE_OPERATION_CLIENT'] || TYPE_OPERATION_CLIENT_BROADCAST

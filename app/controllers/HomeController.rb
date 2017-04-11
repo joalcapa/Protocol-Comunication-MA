@@ -11,8 +11,11 @@ class HomeController
                 @homeDao.killServer
                 @homeView.setEvent(false)
             end
+            @running = @homeView.getRunning
             sleep(1);
         end
+        @config.setTypeService(Config::CONFIG_NULL)
+        @homeDao.killServer
     end
     
     def threadPresent
