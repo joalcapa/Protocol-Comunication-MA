@@ -16,12 +16,16 @@ class Config
  SERVER_HELLO_PORT = ENV['SERVER_HELLO_PORT'] || 'HELLO CLIENT MA:4500'
     
  MACHINE_IP = (Socket.ip_address_list.detect{|intf| intf.ipv4_private?}).ip_address
+ ROUTE_RESOURCE = ENV['ROUTE_RESOURCE'] || 'assets/resource.png'
+ SIZE_PACKAGE_DATA = 1024
+ SIZE_PACKAGE_SOCKET = 2048
 
  CONFIG_NULL = 'NULL'
     
  def initialize
   @typeService = ENV['TYPE_SERVICE'] || TYPE_SERVICE_CLIENT
   @typeOperationClient = ENV['TYPE_OPERATION_CLIENT'] || TYPE_OPERATION_CLIENT_BROADCAST
+  @arrayData = bytesData(Config::ROUTE_RESOURCE)
   @mutex=Mutex.new
  end
     
@@ -43,11 +47,30 @@ class Config
    $typeOperationClient = @typeOperationClient
   end
   return $typeOperationClient
- end  
+ end
+    
+ def getSegmentArrayData(start, length)
+  @mutex.synchronize do
+   $arrayData = @arrayData[start..length]
+  end
+  return $arrayData
+ end
+    
+ def sizeArrayData
+  @mutex.synchronize do
+   $size = @arrayData.length
+  end
+  return $size
+ end
     
  def setTypeOperationClient(typeOperationClient)
   @mutex.synchronize do
    @typeOperationClient = typeOperationClient
   end
+ end
+    
+ def bytesData(route)
+  f = File.binread route  
+  return f.unpack('B*')[0].chars.to_a
  end
 end

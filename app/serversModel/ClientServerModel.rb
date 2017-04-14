@@ -3,7 +3,7 @@ class ClientServerModel < ServerModel
   $socketUDP = UDPSocket.new
   $socketUDP.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
   $socketUDP.send(Config::BROADCAST_HELLO, 0, Config::BROADCAST_HOST, Config::BROADCAST_PORT)
-  data, addr = $socketUDP.recvfrom(1024)
+  data, addr = $socketUDP.recvfrom(Config::SIZE_PACKAGE_SOCKET)
   arrayData = data.split(":")
   if arrayData.length == 2
    if arrayData[0] == Config::SERVER_HELLO
@@ -17,7 +17,7 @@ class ClientServerModel < ServerModel
     
  def converse
   $socket = TCPSocket.new @addrServer, @portServer
-  while line = $socket.read(1024)
+  while line = $socket.read(Config::SIZE_PACKAGE_DATA)
    puts line         
   end
   $socket.close 

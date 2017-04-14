@@ -15,7 +15,4 @@ class ServerServerModel < ServerModel
   @UDPServerModel.killServer
   @TCPServerModel.killServer
  end
-    
- def bytesData(route)
- end
 end
