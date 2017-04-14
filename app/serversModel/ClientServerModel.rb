@@ -16,16 +16,28 @@ class ClientServerModel < ServerModel
  end
     
  def converse
+  @imagen = ''
+  @running = true
   $socket = TCPSocket.new @addrServer, @portServer
-  while line = $socket.read(Config::SIZE_PACKAGE_DATA)
-   puts line         
+  while @running
+   sendPackages()
   end
-  $socket.close 
+  putsFile(@imagen, 'imagenn.png')
+  $socket.close
  end
     
+ def sendPackages
+  data, addr = $socket.recvfrom(Config::SIZE_PACKAGE_DATA)
+  if(data == Config::CLOSED_COMUNICATION) then
+   @running = false
+  else
+   @imagen = @imagen + data
+  end
+ end
+       
  def putsFile(binaryData, route)
   File.open(route, 'wb') {
-   |f| f.write(Base64.decode64(binaryData))
+      |f| f.write(binaryData)
   } 
  end
 

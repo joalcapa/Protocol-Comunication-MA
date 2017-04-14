@@ -19,6 +19,7 @@ class Config
  ROUTE_RESOURCE = ENV['ROUTE_RESOURCE'] || 'assets/resource.png'
  SIZE_PACKAGE_DATA = 1024
  SIZE_PACKAGE_SOCKET = 2048
+ CLOSED_COMUNICATION = ENV['CLOSED_COMUNICATION'] || 'CLOSED_COMUNICATION'
 
  CONFIG_NULL = 'NULL'
     
@@ -51,7 +52,7 @@ class Config
     
  def getSegmentArrayData(start, length)
   @mutex.synchronize do
-   $arrayData = @arrayData[start..length]
+   $arrayData = @arrayData[start,length]
   end
   return $arrayData
  end
@@ -70,7 +71,8 @@ class Config
  end
     
  def bytesData(route)
-  f = File.binread route  
-  return f.unpack('B*')[0].chars.to_a
+  f = File.binread route
+  f.unpack('C*')
+  return f
  end
 end
