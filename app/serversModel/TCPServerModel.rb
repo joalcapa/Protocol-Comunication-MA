@@ -1,5 +1,10 @@
 class TCPServerModel < ServerModel
  def serviceTCP
+  TCPServer.open(Config::MACHINE_IP, Config::SERVER_PORT_MA) {|serv|
+   while socket = serv.accept
+    ClientTCPModel.new(socket)
+   end
+  }
  end
     
  def runner
@@ -7,6 +12,5 @@ class TCPServerModel < ServerModel
  end 
     
  def stopRunner() 
-  #@socketUDP.close
  end
 end

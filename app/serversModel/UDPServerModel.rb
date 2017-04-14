@@ -15,6 +15,5 @@ class UDPServerModel < ServerModel
  end 
     
  def stopRunner() 
-  #@socketUDP.close
  end
 end

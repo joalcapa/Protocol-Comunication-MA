@@ -11,8 +11,11 @@ class Config
     
  SERVER_HOST = ENV['SERVER_HOST'] || '0.0.0.0'
  SERVER_PORT = ENV['SERVER-PORT'] || '3000'
+ SERVER_PORT_MA = ENV['SERVER_PORT_MA'] || '4500'
  SERVER_HELLO = ENV['SERVER_HELLO'] || 'HELLO CLIENT MA'
  SERVER_HELLO_PORT = ENV['SERVER_HELLO_PORT'] || 'HELLO CLIENT MA:4500'
+    
+ MACHINE_IP = (Socket.ip_address_list.detect{|intf| intf.ipv4_private?}).ip_address
 
  CONFIG_NULL = 'NULL'
     

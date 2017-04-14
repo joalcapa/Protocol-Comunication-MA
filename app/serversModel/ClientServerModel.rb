@@ -15,7 +15,12 @@ class ClientServerModel < ServerModel
   $socketUDP.close
  end
     
- def conversation
+ def converse
+  $socket = TCPSocket.new @addrServer, @portServer
+  while line = $socket.read(1024)
+   puts line         
+  end
+  $socket.close 
  end
 
  def runner
@@ -23,7 +28,7 @@ class ClientServerModel < ServerModel
   when Config::TYPE_SERVICE_CLIENT
    case @config.getTypeOperationClient
    when Config::TYPE_OPERATION_CLIENT_CONVERSATION
-    conversation()
+    converse()
    when Config::TYPE_OPERATION_CLIENT_BROADCAST
     messageBroadcast()
    end
