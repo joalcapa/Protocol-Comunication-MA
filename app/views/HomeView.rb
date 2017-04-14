@@ -14,7 +14,6 @@ class HomeView
   @statusOperationClient, @event, @running = LOOKING_SERVER, false, true
   @mutex=Mutex.new
   initContext()
-  changeMode()
   @thread = Thread.new{ run() }
  end
     
@@ -45,20 +44,29 @@ class HomeView
   TkWinfo.children(content).each {|w| TkGrid.configure w, :padx => 5, :pady => 5}
   f.focus
   root.bind("Return") {changeMode}
+      
+  changeConfigurationView()
  end
         
  def changeMode
   if @config.getTypeService == Config::TYPE_SERVICE_SERVER
-   @modeBtn.text = STR_MODE_SERVER
-   @modeTxt.text = STR_MODE_CLIENT
    @config.setTypeService(Config::TYPE_SERVICE_CLIENT)
   else
-   @modeBtn.text = STR_MODE_CLIENT
-   @modeTxt.text = STR_MODE_SERVER
    @config.setTypeService(Config::TYPE_SERVICE_SERVER)
   end
+  changeConfigurationView()
   changeMessage()
   setEvent(true)
+ end
+    
+ def changeConfigurationView
+  if @config.getTypeService == Config::TYPE_SERVICE_SERVER
+   @modeBtn.text = STR_MODE_CLIENT
+   @modeTxt.text = STR_MODE_SERVER
+  else
+   @modeBtn.text = STR_MODE_SERVER
+   @modeTxt.text = STR_MODE_CLIENT
+  end
  end
         
  def changeMessage

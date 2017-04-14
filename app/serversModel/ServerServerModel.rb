@@ -1,5 +1,18 @@
 class ServerServerModel < ServerModel
+ def initResource
+  @UDPServerModel = UDPServerModel.new(@config, Config::TYPE_SERVICE_SERVER)
+  @TCPServerModel = TCPServerModel.new(@config, Config::TYPE_SERVICE_SERVER)
+ end
+    
+ def handlerUDPTCP
+ end
+    
  def runner
-  puts('Server live')
- end  
+  handlerUDPTCP()
+ end 
+    
+ def stopRunner() 
+  @UDPServerModel.killServer
+  @TCPServerModel.killServer
+ end
 end
