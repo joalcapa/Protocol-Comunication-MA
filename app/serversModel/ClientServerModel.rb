@@ -1,16 +1,29 @@
 class ClientServerModel < ServerModel    
  def messageBroadcast
-  puts 'Cliente live'
   $socketUDP = UDPSocket.new
   $socketUDP.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
   $socketUDP.send(Config::BROADCAST_HELLO, 0, Config::BROADCAST_HOST, Config::BROADCAST_PORT)
+  data, addr = $socketUDP.recvfrom(1024)
+  arrayData = data.split(":")
+  if arrayData.length == 2
+   if arrayData[0] == Config::SERVER_HELLO
+    @addrServer = addr[3]
+    @portServer = arrayData[1]
+    @config.setTypeOperationClient(Config::TYPE_OPERATION_CLIENT_CONVERSATION)
+   end
+  end
   $socketUDP.close
+ end
+    
+ def conversation
  end
 
  def runner
   case @config.getTypeService
   when Config::TYPE_SERVICE_CLIENT
    case @config.getTypeOperationClient
+   when Config::TYPE_OPERATION_CLIENT_CONVERSATION
+    conversation()
    when Config::TYPE_OPERATION_CLIENT_BROADCAST
     messageBroadcast()
    end

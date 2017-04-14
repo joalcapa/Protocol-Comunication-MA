@@ -1,6 +1,7 @@
 class Config
  TYPE_SERVICE_CLIENT = 'CLIENT'
  TYPE_OPERATION_CLIENT_BROADCAST = 'BROADCAST'
+ TYPE_OPERATION_CLIENT_CONVERSATION = 'CONVERSATION'
  TYPE_OPERATION_CLIENT_NONE = 'NONE'
  TYPE_SERVICE_SERVER = 'SERVER'
     
@@ -10,7 +11,8 @@ class Config
     
  SERVER_HOST = ENV['SERVER_HOST'] || '0.0.0.0'
  SERVER_PORT = ENV['SERVER-PORT'] || '3000'
- SERVER_HELLO = ENV['SERVER-HELLO'] || 'HELLO CLIENT MA'
+ SERVER_HELLO = ENV['SERVER_HELLO'] || 'HELLO CLIENT MA'
+ SERVER_HELLO_PORT = ENV['SERVER_HELLO_PORT'] || 'HELLO CLIENT MA:4500'
 
  CONFIG_NULL = 'NULL'
     
@@ -34,6 +36,15 @@ class Config
  end
     
  def getTypeOperationClient
-  return @typeOperationClient
- end   
+  @mutex.synchronize do
+   $typeOperationClient = @typeOperationClient
+  end
+  return $typeOperationClient
+ end  
+    
+ def setTypeOperationClient(typeOperationClient)
+  @mutex.synchronize do
+   @typeOperationClient = typeOperationClient
+  end
+ end
 end

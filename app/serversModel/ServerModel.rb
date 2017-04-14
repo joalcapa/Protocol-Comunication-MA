@@ -11,7 +11,6 @@ class ServerModel
  end
     
  def run
-     puts 'aqui'
   while @running
    runner()
    sleep(1)
