@@ -11,8 +11,11 @@ class ServerServerModel < ServerModel
   handlerUDPTCP()
  end 
     
- def stopRunner() 
+ def stopRunner
   @UDPServerModel.killServer
   @TCPServerModel.killServer
+ end
+    
+ def bytesData(route)
  end
 end

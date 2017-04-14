@@ -22,6 +22,12 @@ class ClientServerModel < ServerModel
   end
   $socket.close 
  end
+    
+ def putsFile(binaryData, route)
+  File.open(route, 'wb') {
+   |f| f.write(Base64.decode64(binaryData))
+  } 
+ end
 
  def runner
   case @config.getTypeService

@@ -1,11 +1,11 @@
 class ClientTCPModel
  def initialize(socket)
-  socket.puts Time.now
-  socket.close
+  @socket = socket
  end
     
  def converse
-     
+  #socket.puts Time.now
+  #socket.close
  end
 
  def runner
