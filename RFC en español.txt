@@ -3,34 +3,34 @@ Request for Comments:                                            C. Jose
                                                               Abril 2017
 
 
-                Un Tutorial de protocolo de ComunicaciÛn
+              Un Tutorial de protocolo MA de Comunicaci√≥n
                      para la materia COMUNICACIONES
-                     IngenierÌa en inform·tica UNET
+                     Ingenier√≠a en inform√°tica UNET
 
 Estado de la memoria
 
-   Este RFC es un tutorial del protocolo de comunicaciÛn, centr·ndose en
+   Este RFC es un tutorial del protocolo de comunicaci√≥n, centr√°ndose en
    particular en los pasos que se requiere para la busqueda de una
-   comunicaciÛn bidireccional entre el servidor y el cliente, en la cu·l
+   comunicaci√≥n bidireccional entre el servidor y el cliente, en la cu√°l
    el servidor le transfiera un recurso en un determinado numero de
    paquetes, a sabiendas que el puerto es conocido para el protocolo,
    pero el HOST del servidor no, el cliente efectua mediante el
    protocolo UDP, especificamente un mensaje BROADCAST para la busqueda
-   del servidor, estÈ le entrega una respuesta asociada con el puerto
+   del servidor, est√© le entrega una respuesta asociada con el puerto
    disponible para efectuar la transferencia del recurso deseado.
 
 Indice de Contenidos
 
-   1.  IntroducciÛn................................................   1
+   1.  Introducci√≥n................................................   1
    2.  Perspectiva general del protocolo...........................   2
-   3.  ConfiguraciÛn del tamaÒo del paquete deseado................   8
-   4.  ConfiguraciÛn del tamaÒo de los paquetes de la conversacion.   8
-   5.  ConfiguraciÛn del mensaje para iniciar la conversaciÛn......   9
-   6.  ConfiguraciÛn del mensaje para cerrar la conversaciÛn.......  12
+   3.  Configuraci√≥n del tama√±o del paquete deseado................   8
+   4.  Configuraci√≥n del tama√±o de los paquetes de la conversacion.   8
+   5.  Configuraci√≥n del mensaje para iniciar la conversaci√≥n......   9
+   6.  Configuraci√≥n del mensaje para cerrar la conversaci√≥n.......  12
    7.  Protocolo UDP para buscar el servidor.......................  20
-   8.  Protocolo UDP para la asignaciÛn del puerto disponible......  22
+   8.  Protocolo UDP para la asignaci√≥n del puerto disponible......  22
    9.  Protocolo TCP para la transferencia del recurso deseado.....  25
-   10. Otra informaciÛn............................................  27
+   10. Otra informaci√≥n............................................  27
    11. Referencias.................................................  27
    13. Consideraciones de seguridad................................  27
    13. Direcciones de los autores..................................  28
