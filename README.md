@@ -38,6 +38,15 @@ ENV['TYPE_SERVICE'] = 'CLIENT'
 By not knowing the address of the server, but knowing the port of the service, the client made a broadcast message, using the UDP protocol
 
 ``` ruby
+SERVER_HOST = ENV['SERVER_HOST'] || '0.0.0.0'
+BROADCAST_HOST = ENV['BROADCAST_HOST'] || '255.255.255.255'
+BROADCAST_PORT = ENV['BROADCAST_PORT'] || '3000'
+BROADCAST_HELLO = ENV['BROADCAST_HELLO'] || 'HELLO SERVER MA'
+```
+
+Default: **BROADCAST_PORT: 3000**
+
+``` ruby
  def messageBroadcast
   $socketUDP = UDPSocket.new
   $socketUDP.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
