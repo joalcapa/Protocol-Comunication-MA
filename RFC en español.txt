@@ -1,0 +1,36 @@
+Network Working Group                                          F. Maicol
+Request for Comments:                                            C. Jose
+                                                              Abril 2017
+
+
+                Un Tutorial de protocolo de Comunicación
+                     para la materia COMUNICACIONES
+                     Ingeniería en informática UNET
+
+Estado de la memoria
+
+   Este RFC es un tutorial del protocolo de comunicación, centrándose en
+   particular en los pasos que se requiere para la busqueda de una
+   comunicación bidireccional entre el servidor y el cliente, en la cuál
+   el servidor le transfiera un recurso en un determinado numero de
+   paquetes, a sabiendas que el puerto es conocido para el protocolo,
+   pero el HOST del servidor no, el cliente efectua mediante el
+   protocolo UDP, especificamente un mensaje BROADCAST para la busqueda
+   del servidor, esté le entrega una respuesta asociada con el puerto
+   disponible para efectuar la transferencia del recurso deseado.
+
+Indice de Contenidos
+
+   1.  Introducción................................................   1
+   2.  Perspectiva general del protocolo...........................   2
+   3.  Configuración del tamaño del paquete deseado................   8
+   4.  Configuración del tamaño de los paquetes de la conversacion.   8
+   5.  Configuración del mensaje para iniciar la conversación......   9
+   6.  Configuración del mensaje para cerrar la conversación.......  12
+   7.  Protocolo UDP para buscar el servidor.......................  20
+   8.  Protocolo UDP para la asignación del puerto disponible......  22
+   9.  Protocolo TCP para la transferencia del recurso deseado.....  25
+   10. Otra información............................................  27
+   11. Referencias.................................................  27
+   13. Consideraciones de seguridad................................  27
+   13. Direcciones de los autores..................................  28
