@@ -67,6 +67,12 @@ end
 
 Both the client and the server follow the configuration given by the protocol configuration.
 
+``` ruby
+SERVER_HELLO_PORT = ENV['SERVER_HELLO_PORT'] || 'HELLO CLIENT MA:4500'
+```
+
+Default: **PORT: 4500**
+
 TCP communication is established, the server creates an instance for the client, in which it will be prepared to serve the requested resource, the client in turn receives the packets and forms the resource, the packet size is defined in the configuration of the application
 ``` ruby
 SIZE_PACKAGE_DATA = 1024
