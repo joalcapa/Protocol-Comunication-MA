@@ -1,5 +1,5 @@
 ## protocolCom
-Communication protocol for Ruby
+Communication protocol MA for Ruby
 
 protocolCom, defines a communication protocol, based on the client-server architecture
 both the client and the server, implement the protocols **TCP**, **UDP**.
