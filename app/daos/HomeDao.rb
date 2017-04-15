@@ -22,7 +22,7 @@ class HomeDao
   if @config.getTypeService == Config::TYPE_SERVICE_CLIENT
    return @clientServerModel.getStatus
   else
-   return 'service server'
+   return Config::MESSAGE_SERVER
   end
  end
 end
