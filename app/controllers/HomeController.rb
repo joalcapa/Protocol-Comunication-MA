@@ -10,6 +10,8 @@ class HomeController
     @homeDao.killServer
     @homeView.setEvent(false)
    end
+   @homeView.asignDataImage(@homeDao.dataResource()) if @homeDao.isClientActiveResource
+   @homeView.status(@homeDao.status)
    @running = @homeView.getRunning
    sleep(1);
   end

@@ -1,4 +1,23 @@
-class ClientServerModel < ServerModel    
+class ClientServerModel < ServerModel 
+ def initResource
+  @isActiveResource = false
+  @mutex=Mutex.new
+  @status = Config::SEARCHING_SERVER
+ end
+    
+ def getStatus
+  @mutex.synchronize do
+   $status = @status
+  end
+  return $status
+ end
+    
+ def setStatus(status)
+  @mutex.synchronize do
+   @status = status
+  end
+ end
+ 
  def messageBroadcast
   $socketUDP = UDPSocket.new
   $socketUDP.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
@@ -10,35 +29,33 @@ class ClientServerModel < ServerModel
     @addrServer = addr[3]
     @portServer = arrayData[1]
     @config.setTypeOperationClient(Config::TYPE_OPERATION_CLIENT_CONVERSATION)
+    #setStatus(Config::SERVER_FOUND)
    end
   end
   $socketUDP.close
  end
     
  def converse
-  @imagen = ''
-  @running = true
+  @resource = ''
+  @runningSocket = true
   $socket = TCPSocket.new @addrServer, @portServer
-  while @running
+  while @runningSocket
    sendPackages()
+   #setStatus(Config::DOWNLOADING_RESOURCE)
   end
-  putsFile(@imagen, 'imagenn.png')
   $socket.close
+  @running =false
+  @isActiveResource = true
+  #setStatus(Config::DISCONNECTED_FROM_SERVER)
  end
     
  def sendPackages
   data, addr = $socket.recvfrom(Config::SIZE_PACKAGE_DATA)
   if(data == Config::CLOSED_COMUNICATION) then
-   @running = false
+   @runningSocket = false
   else
-   @imagen = @imagen + data
+   @resource = @resource + data
   end
- end
-       
- def putsFile(binaryData, route)
-  File.open(route, 'wb') {
-      |f| f.write(binaryData)
-  } 
  end
 
  def runner
@@ -51,5 +68,13 @@ class ClientServerModel < ServerModel
     messageBroadcast()
    end
   end
+ end
+     
+ def isActiveResource
+  return @isActiveResource
+ end
+     
+ def dataResource
+  return @resource
  end
 end

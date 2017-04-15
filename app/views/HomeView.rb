@@ -4,14 +4,12 @@ require 'tkextlib/tile'
 class HomeView
  STR_MODE_CLIENT = 'MODE CLIENT'
  STR_MODE_SERVER = 'MODE SERVER' 
- STR_LOOKING_SERVER = 'Looking server ...'
- STR_WAITING_CLIENTS = 'Waiting for clients ...'
     
  LOOKING_SERVER = 1
     
  def initialize(config)
   @config = config
-  @statusOperationClient, @event, @running = LOOKING_SERVER, false, true
+  @event, @running = false, true
   @mutex=Mutex.new
   initContext()
   @thread = Thread.new{ run() }
@@ -20,9 +18,7 @@ class HomeView
  def initContext
   root = TkRoot.new {title "Feet to Meters"}
   content = Tk::Tile::Frame.new(root) { padding "3 3 12 12" }.grid( :sticky => 'nsew')
-        
   TkGrid.columnconfigure root, 0, :weight => 1; TkGrid.rowconfigure root, 0, :weight => 1
-        
   $feet = TkVariable.new;
   $meters = TkVariable.new
   f = Tk::Tile::Entry.new(content) {
@@ -30,22 +26,26 @@ class HomeView
    textvariable $feet
   }.grid( :column => 2, :row => 1, :sticky => 'we')
   Tk::Tile::Label.new(content) { textvariable $meters }.grid( :column => 2, :row => 2, :sticky => 'we')
-        
   @modeBtn = TkButton.new(
    content,
    :text => '',
    :command => proc {changeMode}
   ).pack.grid( :column => 1, :row => 3, :sticky => 'w')
-      
   @modeTxt = Tk::Tile::Label.new(content) { text '' }.grid( :column => 1, :row => 1, :sticky => 'w')
-            
   @messageTxt = Tk::Tile::Label.new(content) { text '' }.grid( :column => 3, :row => 3, :sticky => 'w')
- 
+      
+  @labelImage = TkLabel.new(root) 
+  @labelImage.grid( :column => 4, :row => 0, :sticky => 'w')
+      
   TkWinfo.children(content).each {|w| TkGrid.configure w, :padx => 5, :pady => 5}
   f.focus
   root.bind("Return") {changeMode}
-      
   changeConfigurationView()
+ end
+     
+ def asignDataImage(dataResource)
+  @image = TkPhotoImage.new(:data => dataResource)
+  @labelImage.image = @image
  end
         
  def changeMode
@@ -55,7 +55,6 @@ class HomeView
    @config.setTypeService(Config::TYPE_SERVICE_SERVER)
   end
   changeConfigurationView()
-  changeMessage()
   setEvent(true)
  end
     
@@ -69,15 +68,6 @@ class HomeView
   end
  end
         
- def changeMessage
-  case @statusOperationClient
-  when LOOKING_SERVER
-   @messageTxt.text = STR_LOOKING_SERVER
-  else
-   @messageTxt.text = STR_LOOKING_SERVER
-  end
- end
-        
  def run
   Tk.mainloop
   @running = false
@@ -85,10 +75,6 @@ class HomeView
     
  def threadPresent
   return @thread
- end
-        
- def connected(quantity)
-  @messageTxt.text = 'Connected: #{quantity}, #{STR_LOOKING_SERVER}'
  end
         
  def getEvent
@@ -109,5 +95,10 @@ class HomeView
    $running = @running
   end
   return $running
+ end
+     
+ def status(status)
+  @messageTxt.text = status
+  puts status
  end
 end

@@ -15,6 +15,7 @@ class ClientTCPModel
  end
     
  def converse
+     puts 'enviando'
   if @index <= @countPackage then
    @socket.write(@config.getSegmentArrayData(@start, @length))
   end
