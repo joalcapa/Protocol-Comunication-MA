@@ -11,6 +11,12 @@ implemented in addition the software component **DAO**(Object of Data Access).
 * **TCPServer**
 * **TkRoot**
 
+``` ruby
+require 'socket'
+require 'tk'
+require 'tkextlib/tile'
+```
+
 ### Starting the application from windows cmd
 `
 ruby main.rb
