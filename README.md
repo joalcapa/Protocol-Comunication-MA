@@ -48,20 +48,28 @@ Default: **BROADCAST_PORT: 3000**
 
 ``` ruby
  def messageBroadcast
-  $socketUDP = UDPSocket.new
-  $socketUDP.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
-  $socketUDP.send(Config::BROADCAST_HELLO, 0, Config::BROADCAST_HOST, Config::BROADCAST_PORT)
-  data, addr = $socketUDP.recvfrom(Config::SIZE_PACKAGE_SOCKET)
-  arrayData = data.split(":")
-  if arrayData.length == 2
-   if arrayData[0] == Config::SERVER_HELLO
-    @addrServer = addr[3]
-    @portServer = arrayData[1]
-    @config.setTypeOperationClient(Config::TYPE_OPERATION_CLIENT_CONVERSATION)
-    #setStatus(Config::SERVER_FOUND)
+  @socketUDP = UDPSocket.new
+  @socketUDP.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
+  @socketUDP.send(Config::BROADCAST_HELLO, 0, Config::BROADCAST_HOST, Config::BROADCAST_PORT)
+  begin
+   data, addr = @socketUDP.recvfrom(Config::SIZE_PACKAGE_SOCKET)
+   arrayData = data.split(":")
+   if arrayData.length == 2
+    if arrayData[0] == Config::SERVER_HELLO
+     @addrServer = addr[3]
+     @portServer = arrayData[1]
+     @config.setTypeOperationClient(Config::TYPE_OPERATION_CLIENT_CONVERSATION)
+     @config.mutex().lock
+      @status = Config::SERVER_FOUND
+     @config.mutex().unlock
+     @resource = ''
+     @socket = TCPSocket.new @addrServer, @portServer
+    end
    end
-  end
-  $socketUDP.close
+   @socketUDP.close
+  rescue
+   @timeSearchServer = 0
+  end 
  end
 ```
 
@@ -114,28 +122,20 @@ end
 The client receives the packets and concatenates them in an array of bytes, the controller notices the existence of the resource and sends it to the view, it is in charge of displaying the resource in context.
 
 ``` ruby
-def converse
-  @resource = ''
-  @runningSocket = true
-  $socket = TCPSocket.new @addrServer, @portServer
-  while @runningSocket
-   sendPackages()
-   #setStatus(Config::DOWNLOADING_RESOURCE)
-  end
-  $socket.close
-  @running =false
-  @isActiveResource = true
-  #setStatus(Config::DISCONNECTED_FROM_SERVER)
-end
-    
-def sendPackages
-  data, addr = $socket.recvfrom(Config::SIZE_PACKAGE_DATA)
-  if(data == Config::CLOSED_COMUNICATION) then
-   @runningSocket = false
-  else
-   @resource = @resource + data
-  end
-end
+ def converse
+  @config.mutex().lock
+   data, addr = @socket.recvfrom(Config::SIZE_PACKAGE_DATA)
+    if(data == Config::CLOSED_COMUNICATION) then
+     @status = Config::DISCONNECTED_FROM_SERVER
+     @socket.close
+     @running = false
+     @isActiveResource = true
+    else
+     @status = Config::DOWNLOADING_RESOURCE
+     @resource = @resource + data
+    end
+  @config.mutex().unlock
+ end
 ```
 
 The view receives the byte array and presents it in context.
