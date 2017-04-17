@@ -1,21 +1,13 @@
 class ClientServerModel < ServerModel 
  def initResource
   @isActiveResource = false
-  @mutex=Mutex.new
-  @status = Config::SEARCHING_SERVER
+  @config.mutex().lock
+   @status = Config::SEARCHING_SERVER
+  @config.mutex().unlock
  end
     
  def getStatus
-  @mutex.synchronize do
-   $status = @status
-  end
-  return $status
- end
-    
- def setStatus(status)
-  @mutex.synchronize do
-   @status = status
-  end
+  return @status
  end
  
  def messageBroadcast
@@ -29,44 +21,50 @@ class ClientServerModel < ServerModel
     @addrServer = addr[3]
     @portServer = arrayData[1]
     @config.setTypeOperationClient(Config::TYPE_OPERATION_CLIENT_CONVERSATION)
-    #setStatus(Config::SERVER_FOUND)
+    @config.mutex().lock
+     @status = Config::SERVER_FOUND
+    @config.mutex().unlock
+    @resource = ''
+    @runningSocket = true
+    $socket = TCPSocket.new @addrServer, @portServer
    end
   end
   $socketUDP.close
  end
     
  def converse
-  @resource = ''
-  @runningSocket = true
-  $socket = TCPSocket.new @addrServer, @portServer
-  while @runningSocket
-   sendPackages()
-   #setStatus(Config::DOWNLOADING_RESOURCE)
+  if @runningSocket
+   receivePackages()
+  else 
+   $socket.close
+   @running = false
+   @config.mutex().lock
+    @isActiveResource = true
+   @config.mutex().unlock
   end
-  $socket.close
-  @running =false
-  @isActiveResource = true
-  #setStatus(Config::DISCONNECTED_FROM_SERVER)
  end
     
- def sendPackages
+ def receivePackages
   data, addr = $socket.recvfrom(Config::SIZE_PACKAGE_DATA)
   if(data == Config::CLOSED_COMUNICATION) then
    @runningSocket = false
+   @config.mutex().lock
+    @status = Config::DISCONNECTED_FROM_SERVER
+   @config.mutex().unlock
   else
+   @config.mutex().lock
+    @status = Config::DOWNLOADING_RESOURCE
+   @config.mutex().unlock
    @resource = @resource + data
   end
  end
 
  def runner
-  case @config.getTypeService
-  when Config::TYPE_SERVICE_CLIENT
-   case @config.getTypeOperationClient
-   when Config::TYPE_OPERATION_CLIENT_CONVERSATION
-    converse()
-   when Config::TYPE_OPERATION_CLIENT_BROADCAST
-    messageBroadcast()
-   end
+  case @config.getTypeOperationClient
+  when Config::TYPE_OPERATION_CLIENT_CONVERSATION
+   converse()
+  when Config::TYPE_OPERATION_CLIENT_BROADCAST
+   messageBroadcast()
   end
  end
      

@@ -1,7 +1,7 @@
 class ServerServerModel < ServerModel
  def initResource
-  @UDPServerModel = UDPServerModel.new(@config, Config::TYPE_SERVICE_SERVER)
-  @TCPServerModel = TCPServerModel.new(@config, Config::TYPE_SERVICE_SERVER)
+  @UDPServerModel = UDPServerModel.new(@config)
+  @TCPServerModel = TCPServerModel.new(@config)
  end
     
  def handlerUDPTCP
