@@ -6,16 +6,16 @@ class HomeController
     
  def run
   while @running
-   if @homeView.getEvent
-    @homeDao.killServer
-    @homeView.setEvent(false)
-   end
-   @homeView.asignDataImage(@homeDao.dataResource()) if @homeDao.isClientActiveResource
-   @homeView.status(@homeDao.status)
-   @running = @homeView.getRunning
-   sleep(1);
+   @running = @homeView.getRunning()
+   @config.mutex().lock
+    if(@homeDao.isClientActiveResource() == true) then
+     @running = false
+     @homeView.asignDataImage(@homeDao.dataResource()) 
+    end
+    @homeView.status(@homeDao.getStatus())
+   @config.mutex().unlock
+   sleep(1)       
   end
-  @config.setTypeService(Config::CONFIG_NULL)
   @homeDao.killServer
  end
     

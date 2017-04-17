@@ -6,6 +6,7 @@ class Config
  TYPE_SERVICE_SERVER = 'SERVER'
  SERVER_FOUND = 'SERVER_FOUND'
  DISCONNECTED_FROM_SERVER = 'DISCONNECTED_FROM_SERVER'
+ DOWNLOADING_RESOURCE = 'DOWNLOADING_RESOURCE'
     
  SEARCHING_SERVER = 'SEARCHING SERVER'
  MESSAGE_SERVER = 'SERVICE SERVER'
@@ -21,63 +22,48 @@ class Config
  SERVER_HELLO_PORT = ENV['SERVER_HELLO_PORT'] || 'HELLO CLIENT MA:4500'
     
  MACHINE_IP = (Socket.ip_address_list.detect{|intf| intf.ipv4_private?}).ip_address
+ 
  ROUTE_RESOURCE = ENV['ROUTE_RESOURCE'] || 'assets/resource.gif'
- SIZE_PACKAGE_DATA = 1024
- SIZE_PACKAGE_SOCKET = 2048
+ SIZE_PACKAGE_DATA = ENV['SIZE_PACKAGE_DATA'] || 1024
+ SIZE_PACKAGE_SOCKET = ENV['SIZE_PACKAGE_SOCKET'] || 2048
  CLOSED_COMUNICATION = ENV['CLOSED_COMUNICATION'] || 'CLOSED_COMUNICATION'
 
  CONFIG_NULL = 'NULL'
     
  def initialize
   @typeService = ENV['TYPE_SERVICE'] || TYPE_SERVICE_CLIENT
-  @typeOperationClient = ENV['TYPE_OPERATION_CLIENT'] || TYPE_OPERATION_CLIENT_BROADCAST
+  @typeOperationClient = TYPE_OPERATION_CLIENT_BROADCAST
   @arrayData = bytesData(Config::ROUTE_RESOURCE)
   @mutex=Mutex.new
  end
     
  def getTypeService
-  @mutex.synchronize do
-   $typeService = @typeService
-  end
-  return $typeService
- end
-    
- def setTypeService(typeService)
-  @mutex.synchronize do
-   @typeService = typeService
-  end
+  return @typeService
  end
     
  def getTypeOperationClient
-  @mutex.synchronize do
-   $typeOperationClient = @typeOperationClient
-  end
-  return $typeOperationClient
+  return @typeOperationClient
  end
     
  def getSegmentArrayData(start, length)
-  @mutex.synchronize do
-   $arrayData = @arrayData[start,length]
-  end
-  return $arrayData
+  return @arrayData[start,length]
  end
     
  def sizeArrayData
-  @mutex.synchronize do
-   $size = @arrayData.length
-  end
-  return $size
+  return @arrayData.length
  end
     
  def setTypeOperationClient(typeOperationClient)
-  @mutex.synchronize do
    @typeOperationClient = typeOperationClient
-  end
  end
     
  def bytesData(route)
   f = File.binread route
   f.unpack('C*')
   return f
+ end
+    
+ def mutex
+  return @mutex
  end
 end
