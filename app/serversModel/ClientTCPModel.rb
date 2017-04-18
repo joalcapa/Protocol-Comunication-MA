@@ -9,8 +9,9 @@ class ClientTCPModel
  def run
   while @running
    converse()
-   sleep(1)
+   sleep(@config.timeSend)
   end
+  sleep(@config.timeClosed)
   @socket.write(Config::CLOSED_COMUNICATION)
  end
     

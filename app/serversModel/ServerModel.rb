@@ -12,7 +12,7 @@ class ServerModel
  def run
   while @running
    runner()
-   sleep(1)
+   sleep(@config.timeNormal)
   end
  end
     

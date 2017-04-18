@@ -24,6 +24,12 @@ class HomeDao
   end
  end
     
+ def timeSearchServer
+  if(@config.getTypeService == Config::TYPE_SERVICE_CLIENT)
+   @clientServerModel.timeSearchServer
+  end
+ end
+    
  def dataResource
   return @clientServerModel.dataResource()
  end

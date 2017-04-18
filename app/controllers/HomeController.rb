@@ -8,13 +8,14 @@ class HomeController
   while @running
    @running = @homeView.getRunning()
    @config.mutex().lock
-    if(@homeDao.isClientActiveResource() == true) then
+    @homeDao.timeSearchServer
+    if (@homeDao.isClientActiveResource() == true)
      @running = false
      @homeView.asignDataImage(@homeDao.dataResource()) 
     end
     @homeView.status(@homeDao.getStatus())
    @config.mutex().unlock
-   sleep(1)       
+   sleep(@config.timeNormal)
   end
   @homeDao.killServer
  end

@@ -15,7 +15,7 @@ class HomeView
  end
     
  def initContext
-  root = TkRoot.new {title "Feet to Meters"}
+  root = TkRoot.new {title "Protocol MA"}
   content = Tk::Tile::Frame.new(root) { padding "3 3 12 12" }.grid( :sticky => 'nsew')
   TkGrid.columnconfigure root, 0, :weight => 1; TkGrid.rowconfigure root, 0, :weight => 1
   @modeTxt = Tk::Tile::Label.new(content) { text '' }.grid( :column => 1, :row => 1, :sticky => 'w')
@@ -44,7 +44,7 @@ class HomeView
   return @running
  end
      
- def status(status)
-  @messageTxt.text = status
+ def status(statusText)
+  @messageTxt.text = statusText
  end
 end
