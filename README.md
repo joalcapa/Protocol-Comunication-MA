@@ -1,4 +1,4 @@
-## protocolCom
+## Protocol of Comunication MA
 Communication **protocol MA** in Ruby
 
 protocolCom, defines a communication protocol, based on the client-server architecture
