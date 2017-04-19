@@ -17,7 +17,7 @@ require 'tk'
 require 'tkextlib/tile'
 ```
 
-### Starting the application git
+### Starting the application with git
 
 Clone repository:
 
