@@ -18,11 +18,22 @@ require 'tkextlib/tile'
 ```
 
 ### Starting the application git
+
+Clone repository:
+
 `
 $ git clone git://github.com/joalcapa/Protocol-Comunication-MA.git
+`
 
+By entering the repository folder:
+
+`
 $ cd Protocol-Comunication-MA
+`
 
+Running the application:
+
+`
 $ ruby main.rb
 `
 
