@@ -17,9 +17,11 @@ require 'tk'
 require 'tkextlib/tile'
 ```
 
-### Starting the application from windows cmd
+### Starting the application git
 `
-ruby main.rb
+$ git clone git://github.com/joalcapa/Protocol-Comunication-MA.git
+$ cd Protocol-Comunication-MA
+$ ruby main.rb
 `
 
 **Main.rb** is the starting point of the application, a code block in which both the DAO object, the controller and the view are loaded
