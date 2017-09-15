@@ -23,7 +23,7 @@ class Config
     
  MACHINE_IP = (Socket.ip_address_list.detect{|intf| intf.ipv4_private?}).ip_address
  
- ROUTE_RESOURCE = ENV['ROUTE_RESOURCE'] || 'assets/resource.gif'
+ ROUTE_RESOURCE = ENV['ROUTE_RESOURCE'] || 'assets/resource.GIF'
  SIZE_PACKAGE_DATA = ENV['SIZE_PACKAGE_DATA'] || 1024
  SIZE_PACKAGE_SOCKET = ENV['SIZE_PACKAGE_SOCKET'] || 2048
  CLOSED_COMUNICATION = ENV['CLOSED_COMUNICATION'] || 'CLOSED COMUNICATION'
