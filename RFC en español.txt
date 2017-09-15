@@ -34,3 +34,19 @@ Indice de Contenidos
    11. Referencias.................................................  27
    13. Consideraciones de seguridad................................  27
    13. Direcciones de los autores..................................  28
+
+
+
+
+
+
+   Introducción
+   
+    El protocolo MA de Comunicación es una forma de comunicarse, 
+    mediante el protocolo TCP, cuyo objetivo es compartir un recurso
+    entre el servidor y el cliente, en formato de array de bytes,
+    inicialmente es una imagen el recurso que se comparte, el cliente
+    busca atravez de Broadcast al servidor, por ende es necesario
+    por parte del cliente conocer de antemano la red, en la cual 
+    se ubica el servidor, debido a que no implementa un servicio
+    de resolución de Ip.
