@@ -96,7 +96,10 @@ Indice de Contenidos
     
     Otra información
     
-    Muchos programas dentro de una red de datos compuesta por redes de computadoras, pueden usar TCP para crear “conexiones” entre sí a     través de las cuales puede enviarse un flujo de datos. El protocolo garantiza que los datos serán entregados en su destino sin           errores y en el mismo orden en que se transmitieron.
+    Muchos programas dentro de una red de datos compuesta por redes de computadoras,
+    pueden usar TCP para crear “conexiones” entre sí a través de las cuales puede enviarse
+    un flujo de datos. El protocolo garantiza que los datos serán entregados en su destino sin 
+    errores y en el mismo orden en que se transmitieron.
     
     Referencias
     
