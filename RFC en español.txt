@@ -24,16 +24,13 @@ Indice de Contenidos
    1.  Introducción................................................   1
    2.  Perspectiva general del protocolo...........................   2
    3.  Configuración del tamaño del paquete deseado................   8
-   4.  Configuración del tamaño de los paquetes de la conversacion.   8
-   5.  Configuración del mensaje para iniciar la conversación......   9
-   6.  Configuración del mensaje para cerrar la conversación.......  12
-   7.  Protocolo UDP para buscar el servidor.......................  20
-   8.  Protocolo UDP para la asignación del puerto disponible......  22
-   9.  Protocolo TCP para la transferencia del recurso deseado.....  25
-   10. Otra información............................................  27
-   11. Referencias.................................................  27
-   13. Consideraciones de seguridad................................  27
-   13. Direcciones de los autores..................................  28
+   4.  Configuración del mensaje para iniciar la conversación......   9
+   5.  Configuración del mensaje para cerrar la conversación.......  12
+   6.  Protocolo UDP para buscar el servidor.......................  2
+   7.  Protocolo TCP para la transferencia del recurso deseado.....  25
+   8.  Otra información............................................  27
+   9.  Referencias.................................................  2
+   10. Direcciones de los autores..................................  28
 
 
 
@@ -50,3 +47,63 @@ Indice de Contenidos
     por parte del cliente conocer de antemano la red, en la cual 
     se ubica el servidor, debido a que no implementa un servicio
     de resolución de Ip.
+    
+    Perspectiva general del protocolo
+    
+    El protocolo ha sido diseñado para realizar la conexión y la 
+    descarga del recurso, mediante el protocolo UDP y TCP, se espera
+    el puerto mediante el protocolo UDP, se espera el recurso mediante
+    el protocolo TCP.
+   
+    Configuración del tamaño del paquete deseado
+    
+    El protocolo MA, requiere un tamaño del paquete de 256 bytes,
+    tanto para el protocolo UDP y TCP.
+    
+    Configuración del mensaje para iniciar la conversación
+    
+    El protocolo MA es muy sencillo, para iniciar la conversación 
+    tanto el protocolo UDP y TCP, solo basta con enviar la cadena
+    'HELLO SERVER MA'.
+    
+    Configuración del mensaje para cerrar la conversación
+    
+    El protocolo MA en realidad no configurá mensajes para cerrar conexión,
+    por el contrario configurá mensajes que se esperán en los protocolos
+    TCP y UDP, como el protocolo MA, es utilizado para sin concer la ip de destino,
+    pero conociendo la red en la que se encuentra, mediante el mensaje BROADCAST,
+    permite encontrar el servidor TCP, es por tanto necesario que se inicié 
+    la conversación en el protocolo UDP, mediante el mensaje 'HELLO SERVER MA',
+    el servidor UDP, response con el puerto asociado al servidor TCP e inmediatamente
+    se cierra la conexión del cliente con el servidor UDP.
+    
+    Por el contrario el mensaje de cierre de conexión en el servidor TCP, es el recurso 
+    en si mismo.
+    
+    Protocolo UDP para buscar el servidor
+    
+    El protocolo UDP es sencillo, tan solo requiere que el cliente
+    envíe la cadena 'HELLO SERVER MA' al servidor UDP, por lo que el servidor UDP
+    reconce la cadena y envia a la dirección y puerto del cliente en una cadena
+    el puerto del servidor TCP.
+    
+    Protocolo TCP para la transferencia del recurso deseado
+    
+    El protocolo UDP es sencillo, tan solo requiere que el cliente
+    envíe la cadena 'HELLO SERVER MA' al servidor TCP, por lo que el servidor TCP
+    reconce la cadena y envia a la dirección y puerto del cliente en una cadena
+    la cadena 'recurso', que es en escencia el recurso disponible del servidor TCP.
+    
+    Otra información
+    
+    Muchos programas dentro de una red de datos compuesta por redes de computadoras, pueden usar TCP para crear “conexiones” entre sí a     través de las cuales puede enviarse un flujo de datos. El protocolo garantiza que los datos serán entregados en su destino sin           errores y en el mismo orden en que se transmitieron.
+    
+    Referencias
+    
+    RFC DE TCP : https://www.rfc-es.org/rfc/rfc0768-es.txt
+    RFC DE UDP : https://www.rfc-es.org/rfc/rfc1180-es.txt
+    
+    Direcciones de los autores
+    
+    Maicol Fariño: maicol.fario@gmail.com
+    Jose Caceres: josecaceres.oreul@gmail.com
